@@ -413,3 +413,13 @@ gradle-app.setting
 .hprof
 
 # End of httpswww.toptal.comdevelopersgitignoreapiintellij,gradle,java,macos,windows,node,react,visualstudiocode,linux
+/.idea/.gitignore
+/.idea/.name
+/.idea/compiler.xml
+/.idea/gradle.xml
+/.idea/modules/inUp.main.iml
+/.idea/jarRepositories.xml
+/.idea/misc.xml
+/.idea/modules.xml
+/.idea/uiDesigner.xml
+/.idea/vcs.xml
