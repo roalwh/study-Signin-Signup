@@ -11,11 +11,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Collection;
 import java.util.List;
 
-@Entity
+
 @Getter
 @NonNull
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Table(name = "member")
+@Entity
 public class Users implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -33,7 +34,7 @@ public class Users implements UserDetails {
   private String password;
 
   @Builder
-  public User(String email,String password, String auth){
+  public Users(String email,String password, String auth){
     this.email = email;
     this.password = password;
   }

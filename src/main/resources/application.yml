@@ -49,9 +49,9 @@ spring:
   jpa:
     show-sql: true
     defer-datasource-initialization: true # data.sql 사용을 위해서 필수적으로 등록
-    generate-ddl: false   # true, false // false 가 기본
+    generate-ddl: true   # true, false // false 가 기본
     hibernate:
-       ddl-auto: update
+       ddl-auto: create
        # create(처음생성시,테스트), create-drop, update(db가 확정되었을 때,수정단계일때), validate, none(최종)
 
   sql:
