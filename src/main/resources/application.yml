@@ -61,6 +61,10 @@ spring:
       # never: data.sql schema.sql import.sql을 실행하지 않음
       encoding: utf-8
 
+  devtools:
+    livereload:
+      enabled: true
+
 #아파치 포트 설정
 #server :
 #  port : 9000

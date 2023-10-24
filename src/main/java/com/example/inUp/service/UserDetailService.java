@@ -1,7 +1,7 @@
 package com.example.inUp.service;
 
-import com.example.inUp.domain.Users;
-import com.example.inUp.repository.UsersRepository;
+import com.example.inUp.domain.User;
+import com.example.inUp.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
@@ -10,10 +10,10 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserDetailService implements UserDetailsService {
 
-  private final UsersRepository userRepository;
+  private final UserRepository userRepository;
 
   @Override
-  public Users loadUserByUsername(String email) {
+  public User loadUserByUsername(String email) {
     return userRepository.findByEmail(email)
         .orElseThrow(() -> new IllegalArgumentException((email)));
   }

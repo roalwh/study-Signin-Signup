@@ -18,7 +18,7 @@ import java.util.List;
 @Getter
 @NonNull
 @Entity
-public class Users implements UserDetails {
+public class User implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "uid", updatable = false)
@@ -35,7 +35,7 @@ public class Users implements UserDetails {
   private String password;
 
   @Builder
-  public Users(String email,String password, String auth){
+  public User(String email, String password, String auth){
     this.email = email;
     this.password = password;
   }
