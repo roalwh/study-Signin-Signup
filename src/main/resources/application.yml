@@ -1,14 +1,15 @@
 # https://docs.spring.io/spring-boot/docs/current/reference/html/application-properties.html#application-properties.core.spring.profiles.default
 
-#yml 설정
+#application.yml 설정
 #사용할 yml파일 이름 application-{이름}.yml -> 파일로 구분시
 spring:
   profiles:
     active: dev    #프로파일 값없으면 시스템 기본값으로 처리
-#    include: oauth     # 반드시 실행 되어야 할 프로파일
+    include:     # 반드시 실행 되어야 할 프로파일
 
   servlet:
     #파일 업로드 시 용량 설정
+    #기본 용량이 많이 적은편..
     multipart:
       max-file-size: 50MB
       max-request-size: 100MB
@@ -25,8 +26,9 @@ spring:
         format_sql: true  # sql문을 보기 편하게 해준다.
         use_sql_comments: true
 
-# application-dev
+
 ---
+# application-dev
 #profile 이름 설정
 spring:
   config:
@@ -47,8 +49,7 @@ spring:
   jpa:
     show-sql: true
     defer-datasource-initialization: true # data.sql 사용을 위해서 필수적으로 등록
-
-    generate-ddl: false   # true, false // false 가 기본임
+    generate-ddl: false   # true, false // false 가 기본
     hibernate:
        ddl-auto: update
        # create(처음생성시,테스트), create-drop, update(db가 확정되었을 때,수정단계일때), validate, none(최종)
@@ -60,31 +61,24 @@ spring:
       # never: data.sql schema.sql import.sql을 실행하지 않음
       encoding: utf-8
 
+#아파치 포트 설정
 server :
   port : 9000
 
-#application-prod
+
 ---
+#application-prod
 spring:
   config:
     activate:
       on-profile: prod
 
   datasource:
-    # url: jdbc:mariadb://118.67.133.34:23306/drinkdb
-    url: jdbc:mariadb://roalwh.iptime.org:20104/drinkdb
+    url: jdbc:mariadb://
     driver-class-name: org.mariadb.jdbc.Driver
-    username: drinkroot
-    password: drink123root!@#
+    username:
+    password:
 
-
-#application-test
 ---
-spring:
-  config:
-    activate:
-      on-profile: test
 
-server :
-  port : 10000
 
