@@ -1,4 +1,4 @@
-package com.example.inUp.domain.model;
+package com.example.inUp.domain;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
@@ -12,10 +12,11 @@ import java.util.Collection;
 import java.util.List;
 
 
+
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(name = "users")
 @Getter
 @NonNull
-@NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "member")
 @Entity
 public class Users implements UserDetails {
   @Id

@@ -48,7 +48,7 @@ spring:
 
   jpa:
     show-sql: true
-    defer-datasource-initialization: true # data.sql 사용을 위해서 필수적으로 등록
+    defer-datasource-initialization: false # data.sql 사용을 위해서 필수적으로 등록
     generate-ddl: true   # true, false // false 가 기본
     hibernate:
        ddl-auto: create
@@ -62,8 +62,8 @@ spring:
       encoding: utf-8
 
 #아파치 포트 설정
-server :
-  port : 9000
+#server :
+#  port : 9000
 
 
 ---
