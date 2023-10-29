@@ -9,16 +9,28 @@ import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
+import static org.springframework.boot.autoconfigure.security.servlet.PathRequest.toH2Console;
 
 @RequiredArgsConstructor
 @Configuration
 public class WebSecurityConfig {
 
   private final UserDetailService userDetailService;
+
+
+  @Bean
+  public WebSecurityCustomizer configure() {
+    return (web) -> web.ignoring()
+        .requestMatchers(toH2Console())
+        .requestMatchers(new AntPathRequestMatcher("/static/**"));
+  }
   //http 요청에 대한 인가 설정
   @Bean
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
@@ -29,7 +41,11 @@ public class WebSecurityConfig {
     //`antMatchers("/admin/")`**는 "/admin/"으로 시작하는 모든 URL에 대한 접근 권한 설정
     //`requestMatchers(HttpMethod.GET, "/public/")`**는 HTTP GET 요청 중 "/public/"으로 시작하는 URL에 대한 보안 설정
     http.authorizeHttpRequests((authorize) -> authorize
-        .requestMatchers("/login","/signup","/user").permitAll()
+        .requestMatchers(
+            new AntPathRequestMatcher("/login"),
+            new AntPathRequestMatcher("/signup"),
+            new AntPathRequestMatcher("/user")
+        ).permitAll()
         .anyRequest().authenticated()
         )
     // 로그인 설정

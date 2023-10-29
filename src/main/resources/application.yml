@@ -42,7 +42,7 @@ spring:
     # Database Setting Info (Database를 H2로 사용하기 위해 H2연결 정보 입력)
     datasource:
       driver-class-name: org.h2.Driver  # Database를 H2로 사용하겠다.
-      url: jdbc:h2:~/test  # H2 접속 정보
+      url: jdbc:h2:mem:test  # H2 접속 정보
       username: sa  # H2 접속 시 입력할 username 정보 (원하는 것으로 입력)
       password:  # H2 접속 시 입력할 password 정보 (원하는 것으로 입력)
 
@@ -65,10 +65,13 @@ spring:
     livereload:
       enabled: true
 
+  jwt:
+    issuer: nmnmnmlk6248@gmail.com  # 생성자
+    secret_key: study-springboot # 시큐릿 키 /나중에 암호화/
+
 #아파치 포트 설정
 #server :
 #  port : 9000
-
 
 ---
 #application-prod

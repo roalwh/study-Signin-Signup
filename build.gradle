@@ -29,8 +29,13 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6'
+
 // https://mvnrepository.com/artifact/jakarta.validation/jakarta.validation-api
 	implementation group: 'jakarta.validation', name: 'jakarta.validation-api', version: '3.0.2'
+// https://mvnrepository.com/artifact/jakarta.xml.bind/jakarta.xml.bind-api
+	implementation group: 'jakarta.xml.bind', name: 'jakarta.xml.bind-api', version: '4.0.1'
+// https://mvnrepository.com/artifact/io.jsonwebtoken/jjwt-api
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.12.3'
 
 	compileOnly 'org.projectlombok:lombok'
 
