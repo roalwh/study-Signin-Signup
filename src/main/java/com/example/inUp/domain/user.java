@@ -1,8 +1,10 @@
 package com.example.inUp.domain;
 
+import com.example.inUp.domain.enums.Authority;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.Comment;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,7 +20,7 @@ import java.util.List;
 @Getter
 @NonNull
 @Entity
-public class User implements UserDetails {
+public class user extends BaseEntity implements UserDetails {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "uid", updatable = false)
@@ -34,15 +36,20 @@ public class User implements UserDetails {
   @Comment("비밀번호")
   private String password;
 
+  @Enumerated(EnumType.STRING)
+//  @ColumnDefault("ROLE_USER")
+  @Comment("관리자 플래그 ROLE_USER-일반, ROLE_ADMIN-관리자")
+  private Authority authority;
+
   @Builder
-  public User(String email, String password, String auth){
+  public user(String email, String password, String auth){
     this.email = email;
     this.password = password;
   }
 
   @Override // 권한 반환
   public Collection<? extends GrantedAuthority> getAuthorities(){
-    return List.of(new SimpleGrantedAuthority("user"));
+    return List.of(new SimpleGrantedAuthority(authority.toString()));
   }
 
   @Override

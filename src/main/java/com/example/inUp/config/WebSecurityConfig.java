@@ -1,5 +1,9 @@
 package com.example.inUp.config;
 
+import com.example.inUp.config.jwt.JwtAccessDeniedHandler;
+import com.example.inUp.config.jwt.JwtAuthenticationEntryPoint;
+import com.example.inUp.config.jwt.JwtSecurityConfig;
+import com.example.inUp.config.jwt.TokenProvider;
 import com.example.inUp.service.UserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -23,7 +27,9 @@ import static org.springframework.boot.autoconfigure.security.servlet.PathReques
 public class WebSecurityConfig {
 
   private final UserDetailService userDetailService;
-
+  private final TokenProvider tokenProvider;
+  private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+  private final JwtAccessDeniedHandler jwtAccessDeniedHandler;
 
   @Bean
   public WebSecurityCustomizer configure() {
@@ -64,7 +70,10 @@ public class WebSecurityConfig {
 
     //http.csrf(AbstractHttpConfigurer::disable);
     http.csrf((csrf) -> csrf.disable());
-
+    http.exceptionHandling(exception -> exception
+        .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+        .accessDeniedHandler(jwtAccessDeniedHandler));
+    http.apply(new JwtSecurityConfig(tokenProvider));
     return http.build();
   }
 

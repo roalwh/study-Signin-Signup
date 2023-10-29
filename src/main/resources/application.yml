@@ -26,6 +26,11 @@ spring:
         format_sql: true  # sql문을 보기 편하게 해준다.
         use_sql_comments: true
 
+jwt:
+  header: Authorization
+  issuer: nmnmnmlk6248@gmail.com  # 생성자
+  secret_key: bm1ubW5tbGs2MjQ4Z21haWwuY29tc3ByaW5nYm9vdDM= # 시크릿 키 /나중에 암호화/
+  expired_seconds: 3600 # 토큰 만료 시간 (ms)
 
 ---
 # application-dev
@@ -48,10 +53,10 @@ spring:
 
   jpa:
     show-sql: true
-    defer-datasource-initialization: false # data.sql 사용을 위해서 필수적으로 등록
+    defer-datasource-initialization: true # data.sql 사용을 위해서 필수적으로 등록
     generate-ddl: true   # true, false // false 가 기본
     hibernate:
-       ddl-auto: create
+       ddl-auto: create-drop
        # create(처음생성시,테스트), create-drop, update(db가 확정되었을 때,수정단계일때), validate, none(최종)
 
   sql:
@@ -65,9 +70,6 @@ spring:
     livereload:
       enabled: true
 
-  jwt:
-    issuer: nmnmnmlk6248@gmail.com  # 생성자
-    secret_key: study-springboot # 시큐릿 키 /나중에 암호화/
 
 #아파치 포트 설정
 #server :
