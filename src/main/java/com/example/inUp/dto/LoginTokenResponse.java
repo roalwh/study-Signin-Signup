@@ -1,11 +1,13 @@
 package com.example.inUp.dto;
 
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class AddUserRequest {
+@Builder
+public class LoginTokenResponse {
   private String email;
-  private String password;
+  private String token;
 }
