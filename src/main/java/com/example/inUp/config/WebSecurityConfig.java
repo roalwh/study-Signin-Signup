@@ -2,6 +2,8 @@ package com.example.inUp.config;
 
 import com.example.inUp.config.jwt.JwtAccessDeniedHandler;
 import com.example.inUp.config.jwt.JwtAuthenticationEntryPoint;
+import com.example.inUp.config.jwt.JwtAuthenticationFilter;
+import com.example.inUp.config.jwt.TokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -27,10 +29,16 @@ public class WebSecurityConfig {
 
   @Autowired
   CorsFilter corsFilter;
+
+  @Autowired
+  JwtAuthenticationFilter jwtAuthenticationFilter;
   @Autowired
   JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
   @Autowired
   JwtAccessDeniedHandler jwtAccessDeniedHandler;
+
+  @Autowired
+  TokenProvider tokenProvider;
 
 //h2 설정
   @Bean
@@ -68,6 +76,7 @@ public class WebSecurityConfig {
 
     //http.csrf(AbstractHttpConfigurer::disable);
     http.csrf(AbstractHttpConfigurer::disable);
+    http.apply(new JwtSecurityConfig(tokenProvider));
     return http.build();
   }
 }

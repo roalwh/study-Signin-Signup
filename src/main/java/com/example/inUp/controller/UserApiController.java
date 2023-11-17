@@ -93,8 +93,8 @@ public class UserApiController {
 
   @GetMapping("/loginInfo")
   @ResponseBody
-  public String currentUserName(Principal principal) {
-    return principal.getName();
+  public ResponseEntity currentUserName(HttpServletRequest request) {
+    return ResponseEntity.ok().body(SecurityContextHolder.getContext().getAuthentication());
   }
 }
 
