@@ -8,16 +8,22 @@ import com.example.inUp.dto.UserRequestDto;
 import com.example.inUp.dto.AddUserResponse;
 import com.example.inUp.dto.ResponseDTO;
 import com.example.inUp.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
+import org.springframework.web.bind.annotation.*;
+
+import java.security.Principal;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -61,15 +67,17 @@ public class UserApiController {
       return ResponseEntity.badRequest().body(responseDTO);
     }
   }
+
   @PostMapping("/signin")
   public ResponseEntity<?> signin(@RequestBody UserRequestDto request) {
-    Users userdata  = userService.getByCredentials(request.getEmail(),request.getPassword(),passwordEncoder);
+    Users userdata = userService.getByCredentials(request.getEmail(), request.getPassword(), passwordEncoder);
 
-    if(userdata !=null){
-      final LoginTokenResponse token = userService.createToken(userdata);
-
-      return ResponseEntity.ok().body(token);
-    }else{
+    //userdata 값이 null 이 아니면토큰 생성
+    if (userdata != null) {
+      final LoginTokenResponse userLoginInfo = userService.createToken(userdata);
+      userLoginInfo.setAuth(userdata.getAuthority().toString());
+      return ResponseEntity.ok().body(userLoginInfo);
+    } else {
       ResponseDTO responseDTO = ResponseDTO.builder()
           .error("Login faild")
           .build();
@@ -77,12 +85,19 @@ public class UserApiController {
     }
   }
 
-//  @GetMapping("/logout")
-//  public String logout(HttpServletRequest request, HttpServletResponse response) {
-//    new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
-//    return "redirect:/login";
-//  }
+  @PostMapping("/logout")
+  public ResponseEntity<?> logout(HttpServletRequest request, HttpServletResponse response) {
+    new SecurityContextLogoutHandler().logout(request, response, SecurityContextHolder.getContext().getAuthentication());
+    return ResponseEntity.ok().body("logout");
+  }
 
-
-
+  @GetMapping("/loginInfo")
+  @ResponseBody
+  public String currentUserName(Principal principal) {
+    return principal.getName();
+  }
 }
+
+
+
+

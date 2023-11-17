@@ -68,7 +68,6 @@ public class WebSecurityConfig {
 
     //http.csrf(AbstractHttpConfigurer::disable);
     http.csrf(AbstractHttpConfigurer::disable);
-    http.addFilterBefore(corsFilter, UsernamePasswordAuthenticationFilter.class);
     return http.build();
   }
 }
